@@ -281,3 +281,9 @@ public class FuncionarioView extends JFrame {
 
 # tela 
 
+![telaexer2](https://github.com/user-attachments/assets/6fd4a486-a077-4942-befb-aad6e6885e20)
+
+# exercicio 3
+
+
+

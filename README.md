@@ -468,6 +468,189 @@ public class BibliotecaView extends JFrame {
 
 # tela 
 
+![telaListadeReserva](https://github.com/user-attachments/assets/08bb7948-7b5b-4bee-a2eb-9102f95dce05)
+
+
+public class ReservaDTO {
+    private String cliente;
+    private int numeroDoQuarto;
+    private String dataEntrada; // Pode usar LocalDate para datas
+    private String dataSaida;
+
+    // Construtor
+    public ReservaDTO(String cliente, int numeroDoQuarto, String dataEntrada, String dataSaida) {
+        this.cliente = cliente;
+        this.numeroDoQuarto = numeroDoQuarto;
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+    }
+
+    // Getters e Setters
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getNumeroDoQuarto() {
+        return numeroDoQuarto;
+    }
+
+    public void setNumeroDoQuarto(int numeroDoQuarto) {
+        this.numeroDoQuarto = numeroDoQuarto;
+    }
+
+    public String getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(String dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public String getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(String dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    @Override
+    public String toString() {
+        return "Reserva [Cliente: " + cliente + ", Quarto: " + numeroDoQuarto + ", Entrada: " + dataEntrada + ", Saída: " + dataSaida + "]";
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReservaDAO {
+    private List<ReservaDTO> reservas;
+
+    public ReservaDAO() {
+        reservas = new ArrayList<>();
+    }
+
+    // Método para adicionar uma nova reserva
+    public void adicionarReserva(ReservaDTO reserva) {
+        reservas.add(reserva);
+    }
+
+    // Método para buscar reservas por data de entrada
+    public List<ReservaDTO> buscarReservasPorData(String data) {
+        List<ReservaDTO> resultado = new ArrayList<>();
+        for (ReservaDTO reserva : reservas) {
+            if (reserva.getDataEntrada().equals(data)) {
+                resultado.add(reserva);
+            }
+        }
+        return resultado;
+    }
+
+    // Método para listar todas as reservas
+    public List<ReservaDTO> listarReservas() {
+        return reservas;
+    }
+}
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class ReservaView extends JFrame {
+    private JTextField txtCliente, txtNumeroQuarto, txtDataEntrada, txtDataSaida;
+    private JButton btnReservar, btnListarReservas;
+    private ReservaDAO reservaDAO;
+
+    public ReservaView() {
+        reservaDAO = new ReservaDAO();
+        setTitle("Sistema de Reserva de Hotel");
+        setSize(400, 300);
+        setLayout(new GridLayout(6, 2));
+
+        // Campos de entrada
+        add(new JLabel("Cliente:"));
+        txtCliente = new JTextField();
+        add(txtCliente);
+
+        add(new JLabel("Número do Quarto:"));
+        txtNumeroQuarto = new JTextField();
+        add(txtNumeroQuarto);
+
+        add(new JLabel("Data de Entrada (dd/mm/aaaa):"));
+        txtDataEntrada = new JTextField();
+        add(txtDataEntrada);
+
+        add(new JLabel("Data de Saída (dd/mm/aaaa):"));
+        txtDataSaida = new JTextField();
+        add(txtDataSaida);
+
+        // Botão para adicionar reserva
+        btnReservar = new JButton("Reservar");
+        btnReservar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cliente = txtCliente.getText();
+                int numeroQuarto = Integer.parseInt(txtNumeroQuarto.getText());
+                String dataEntrada = txtDataEntrada.getText();
+                String dataSaida = txtDataSaida.getText();
+
+                ReservaDTO reserva = new ReservaDTO(cliente, numeroQuarto, dataEntrada, dataSaida);
+                reservaDAO.adicionarReserva(reserva);
+
+                JOptionPane.showMessageDialog(null, "Reserva adicionada com sucesso!");
+                limparCampos();
+            }
+        });
+        add(btnReservar);
+
+        // Botão para listar reservas
+        btnListarReservas = new JButton("Listar Reservas");
+        btnListarReservas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<ReservaDTO> reservas = reservaDAO.listarReservas();
+                StringBuilder sb = new StringBuilder("Reservas:\n");
+                for (ReservaDTO reserva : reservas) {
+                    sb.append(reserva.toString()).append("\n");
+                }
+                JOptionPane.showMessageDialog(null, sb.toString());
+            }
+        });
+        add(btnListarReservas);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    // Método para limpar os campos após a reserva
+    private void limparCampos() {
+        txtCliente.setText("");
+        txtNumeroQuarto.setText("");
+        txtDataEntrada.setText("");
+        txtDataSaida.setText("");
+    }
+
+    public static void main(String[] args) {
+        new ReservaView();
+    }
+}
+
+# exercicio 5 
+
+
+# tela 
+
+
+
+
 
 
 

@@ -829,6 +829,191 @@ public class PedidoView extends JFrame {
 
 # tela 
 
+![telacarro](https://github.com/user-attachments/assets/4ddbbe32-8034-457e-b722-a8b1780fd226)
+
+public class CarroDTO {
+    private String modelo;
+    private String marca;
+    private int ano;
+    private double preco;
+
+    // Construtor
+    public CarroDTO(String modelo, String marca, int ano, double preco) {
+        this.modelo = modelo;
+        this.marca = marca;
+        this.ano = ano;
+        this.preco = preco;
+    }
+
+    // Getters e Setters
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        return "Modelo: " + modelo + ", Marca: " + marca + ", Ano: " + ano + ", Preço: " + preco;
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CarroDAO {
+    private List<CarroDTO> carrosVendidos;
+    private double totalVendas;
+
+    public CarroDAO() {
+        this.carrosVendidos = new ArrayList<>();
+        this.totalVendas = 0.0;
+    }
+
+    // Método para registrar uma venda
+    public void registrarVenda(CarroDTO carro) {
+        carrosVendidos.add(carro);
+        totalVendas += carro.getPreco();
+    }
+
+    // Método para listar todas as vendas
+    public List<CarroDTO> listarVendas() {
+        return carrosVendidos;
+    }
+
+    // Método para obter o total arrecadado
+    public double getTotalVendas() {
+        return totalVendas;
+    }
+}
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SistemaVendasCarrosView extends JFrame {
+    private JTextField txtModelo, txtMarca, txtAno, txtPreco;
+    private JTextArea areaVendas;
+    private CarroDAO carroDAO;
+
+    public SistemaVendasCarrosView() {
+        // Inicializa o DAO
+        carroDAO = new CarroDAO();
+        
+        // Configurações da Janela
+        setTitle("Sistema de Vendas de Carros");
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Painel de Cadastro
+        JPanel panelCadastro = new JPanel(new GridLayout(5, 2));
+        panelCadastro.add(new JLabel("Modelo:"));
+        txtModelo = new JTextField();
+        panelCadastro.add(txtModelo);
+        
+        panelCadastro.add(new JLabel("Marca:"));
+        txtMarca = new JTextField();
+        panelCadastro.add(txtMarca);
+
+        panelCadastro.add(new JLabel("Ano:"));
+        txtAno = new JTextField();
+        panelCadastro.add(txtAno);
+
+        panelCadastro.add(new JLabel("Preço:"));
+        txtPreco = new JTextField();
+        panelCadastro.add(txtPreco);
+
+        JButton btnRegistrar = new JButton("Registrar Venda");
+        panelCadastro.add(btnRegistrar);
+
+        add(panelCadastro, BorderLayout.NORTH);
+
+        // Área de Vendas
+        areaVendas = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(areaVendas);
+        add(scrollPane, BorderLayout.CENTER);
+
+        // Evento de Clique no Botão de Registrar Venda
+        btnRegistrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                registrarVenda();
+            }
+        });
+
+        // Exibir a janela
+        setVisible(true);
+    }
+
+    private void registrarVenda() {
+        // Captura os dados
+        String modelo = txtModelo.getText();
+        String marca = txtMarca.getText();
+        int ano = Integer.parseInt(txtAno.getText());
+        double preco = Double.parseDouble(txtPreco.getText());
+
+        // Cria um novo CarroDTO e registra a venda
+        CarroDTO carro = new CarroDTO(modelo, marca, ano, preco);
+        carroDAO.registrarVenda(carro);
+
+        // Atualiza a exibição
+        atualizarVendas();
+    }
+
+    private void atualizarVendas() {
+        // Limpa a área de texto
+        areaVendas.setText("");
+
+        // Mostra todas as vendas registradas
+        for (CarroDTO carro : carroDAO.listarVendas()) {
+            areaVendas.append(carro.toString() + "\n");
+        }
+
+        // Mostra o total arrecadado
+        areaVendas.append("\nTotal Arrecadado: " + carroDAO.getTotalVendas());
+    }
+
+    public static void main(String[] args) {
+        new SistemaVendasCarrosView();
+    }
+}
+
+
+# exercicio 7 
+
+# tela 
+
+
 
 
 

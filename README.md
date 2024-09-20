@@ -648,6 +648,187 @@ public class ReservaView extends JFrame {
 
 # tela 
 
+![telaPedido](https://github.com/user-attachments/assets/b8d4a4f7-af7c-4292-a404-4ff3f97e71e2)
+
+
+public class PedidoDTO {
+    private int numeroDoPedido;
+    private String cliente;
+    private String itens;
+    private double total;
+
+    public PedidoDTO(int numeroDoPedido, String cliente, String itens, double total) {
+        this.numeroDoPedido = numeroDoPedido;
+        this.cliente = cliente;
+        this.itens = itens;
+        this.total = total;
+    }
+
+    public int getNumeroDoPedido() {
+        return numeroDoPedido;
+    }
+
+    public void setNumeroDoPedido(int numeroDoPedido) {
+        this.numeroDoPedido = numeroDoPedido;
+    }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getItens() {
+        return itens;
+    }
+
+    public void setItens(String itens) {
+        this.itens = itens;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "Numero: " + numeroDoPedido +
+                ", Cliente: '" + cliente + '\'' +
+                ", Itens: '" + itens + '\'' +
+                ", Total: " + total +
+                '}';
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PedidoDAO {
+    private List<PedidoDTO> pedidos;
+
+    public PedidoDAO() {
+        this.pedidos = new ArrayList<>();
+    }
+
+    public void adicionarPedido(PedidoDTO pedido) {
+        pedidos.add(pedido);
+    }
+
+    public void removerPedido(PedidoDTO pedido) {
+        pedidos.remove(pedido);
+    }
+
+    public List<PedidoDTO> listarPedidos() {
+        return pedidos;
+    }
+}
+
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PedidoView extends JFrame {
+    private JTextField txtNumeroPedido, txtCliente, txtItens, txtTotal;
+    private PedidoDAO pedidoDAO;
+
+    public PedidoView() {
+        pedidoDAO = new PedidoDAO();
+
+        setTitle("Sistema de Controle de Pedidos de Restaurantes");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel lblNumeroPedido = new JLabel("Número do Pedido:");
+        lblNumeroPedido.setBounds(10, 10, 150, 25);
+        add(lblNumeroPedido);
+
+        txtNumeroPedido = new JTextField();
+        txtNumeroPedido.setBounds(160, 10, 200, 25);
+        add(txtNumeroPedido);
+
+        JLabel lblCliente = new JLabel("Cliente:");
+        lblCliente.setBounds(10, 45, 150, 25);
+        add(lblCliente);
+
+        txtCliente = new JTextField();
+        txtCliente.setBounds(160, 45, 200, 25);
+        add(txtCliente);
+
+        JLabel lblItens = new JLabel("Itens:");
+        lblItens.setBounds(10, 80, 150, 25);
+        add(lblItens);
+
+        txtItens = new JTextField();
+        txtItens.setBounds(160, 80, 200, 25);
+        add(txtItens);
+
+        JLabel lblTotal = new JLabel("Total:");
+        lblTotal.setBounds(10, 115, 150, 25);
+        add(lblTotal);
+
+        txtTotal = new JTextField();
+        txtTotal.setBounds(160, 115, 200, 25);
+        add(txtTotal);
+
+        JButton btnCadastrar = new JButton("Cadastrar Pedido");
+        btnCadastrar.setBounds(10, 150, 170, 30);
+        add(btnCadastrar);
+
+        JButton btnListar = new JButton("Listar Pedidos");
+        btnListar.setBounds(190, 150, 170, 30);
+        add(btnListar);
+
+        // Evento para cadastrar um pedido
+        btnCadastrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numero = Integer.parseInt(txtNumeroPedido.getText());
+                String cliente = txtCliente.getText();
+                String itens = txtItens.getText();
+                double total = Double.parseDouble(txtTotal.getText());
+
+                PedidoDTO pedido = new PedidoDTO(numero, cliente, itens, total);
+                pedidoDAO.adicionarPedido(pedido);
+
+                JOptionPane.showMessageDialog(null, "Pedido cadastrado com sucesso!");
+            }
+        });
+
+        // Evento para listar todos os pedidos
+        btnListar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuilder pedidosList = new StringBuilder();
+                for (PedidoDTO pedido : pedidoDAO.listarPedidos()) {
+                    pedidosList.append(pedido.toString()).append("\n");
+                }
+                JOptionPane.showMessageDialog(null, pedidosList.toString());
+            }
+        });
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new PedidoView();
+    }
+}
+
+
+# exercicio 6
+
+# tela 
+
 
 
 

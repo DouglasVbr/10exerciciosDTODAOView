@@ -285,5 +285,189 @@ public class FuncionarioView extends JFrame {
 
 # exercicio 3
 
+# tela
+
+![telaBiblioteca](https://github.com/user-attachments/assets/14d787d2-dba7-472a-806f-55aeb08f9a09)
+
+public class LivroDTO {
+    private String titulo;
+    private String autor;
+    private int anoPublicacao;
+
+    public LivroDTO(String titulo, String autor, int anoPublicacao) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anoPublicacao = anoPublicacao;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public int getAnoPublicacao() {
+        return anoPublicacao;
+    }
+
+    public void setAnoPublicacao(int anoPublicacao) {
+        this.anoPublicacao = anoPublicacao;
+    }
+
+    @Override
+    public String toString() {
+        return "Título: " + titulo + ", Autor: " + autor + ", Ano: " + anoPublicacao;
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
+public class LivroDAO {
+    private List<LivroDTO> livros = new ArrayList<>();
+
+    // Adicionar livro
+    public void adicionarLivro(LivroDTO livro) {
+        livros.add(livro);
+        JOptionPane.showMessageDialog(null, "Livro adicionado com sucesso!");
+    }
+
+    // Remover livro pelo título
+    public void removerLivro(String titulo) {
+        for (LivroDTO livro : livros) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                livros.remove(livro);
+                JOptionPane.showMessageDialog(null, "Livro removido com sucesso!");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Livro não encontrado!");
+    }
+
+    // Listar todos os livros
+    public void listarLivros() {
+        if (livros.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum livro cadastrado.");
+        } else {
+            StringBuilder listaLivros = new StringBuilder("Livros cadastrados:\n");
+            for (LivroDTO livro : livros) {
+                listaLivros.append(livro.toString()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, listaLivros.toString());
+        }
+    }
+}
+
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class BibliotecaView extends JFrame {
+    private JTextField txtTitulo, txtAutor, txtAno;
+    private LivroDAO livroDAO;
+
+    public BibliotecaView() {
+        livroDAO = new LivroDAO();
+        initComponents();
+    }
+
+    private void initComponents() {
+        setTitle("Gerenciamento de Biblioteca");
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel lblTitulo = new JLabel("Título:");
+        lblTitulo.setBounds(10, 10, 100, 25);
+        add(lblTitulo);
+
+        txtTitulo = new JTextField();
+        txtTitulo.setBounds(120, 10, 200, 25);
+        add(txtTitulo);
+
+        JLabel lblAutor = new JLabel("Autor:");
+        lblAutor.setBounds(10, 50, 100, 25);
+        add(lblAutor);
+
+        txtAutor = new JTextField();
+        txtAutor.setBounds(120, 50, 200, 25);
+        add(txtAutor);
+
+        JLabel lblAno = new JLabel("Ano de Publicação:");
+        lblAno.setBounds(10, 90, 100, 25);
+        add(lblAno);
+
+        txtAno = new JTextField();
+        txtAno.setBounds(120, 90, 200, 25);
+        add(txtAno);
+
+        JButton btnAdicionar = new JButton("Adicionar Livro");
+        btnAdicionar.setBounds(10, 130, 150, 30);
+        add(btnAdicionar);
+
+        JButton btnRemover = new JButton("Remover Livro");
+        btnRemover.setBounds(170, 130, 150, 30);
+        add(btnRemover);
+
+        JButton btnListar = new JButton("Listar Livros");
+        btnListar.setBounds(10, 170, 150, 30);
+        add(btnListar);
+
+        // Adicionar Livro
+        btnAdicionar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String titulo = txtTitulo.getText();
+                String autor = txtAutor.getText();
+                int anoPublicacao;
+
+                try {
+                    anoPublicacao = Integer.parseInt(txtAno.getText());
+                    LivroDTO livro = new LivroDTO(titulo, autor, anoPublicacao);
+                    livroDAO.adicionarLivro(livro);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Ano de publicação inválido!");
+                }
+            }
+        });
+
+        // Remover Livro
+        btnRemover.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String titulo = txtTitulo.getText();
+                livroDAO.removerLivro(titulo);
+            }
+        });
+
+        // Listar Livros
+        btnListar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                livroDAO.listarLivros();
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        new BibliotecaView().setVisible(true);
+    }
+}
+
+# exercicio 4
+
+# tela 
+
+
 
 
